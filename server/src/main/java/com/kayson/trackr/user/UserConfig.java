@@ -12,13 +12,13 @@ public class UserConfig {
     @Bean
     CommandLineRunner commandLineRunner(UserRepository repository) {
         return args -> {
-//            User kayson = new User("kayson_handle", "kayson_email");
-//
-//            User sonkay = new User("sonkay_handle", "sonkay_email");
-//
-//            repository.saveAll(
-//                    List.of(kayson, sonkay)
-//            );
+            User kayson = new User("kayson_handle", "kayson_email@a.com");
+
+            User sonkay = new User("sonkay_handle", "sonkay_email@b.com");
+
+            repository.saveAll(
+                    List.of(kayson, sonkay)
+            );
         };
 
     }

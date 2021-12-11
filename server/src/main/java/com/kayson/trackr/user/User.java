@@ -1,13 +1,15 @@
 package com.kayson.trackr.user;
 
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.UUID;
 
 
 @Entity
+@JsonIgnoreProperties({"id"})
 @Table(name = "users")
 public class User {
     @Id
@@ -17,13 +19,26 @@ public class User {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     @Column(unique = true, updatable = false, nullable = false)
-    @Getter private UUID id;
+    private UUID id;
 
     @Column(unique = true, nullable = false)
-    @Getter private String handle;
+    private String handle;
 
     @Column(unique = true, nullable = false)
-    @Getter private String email;
+    @Email
+    private String email;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getHandle() {
+        return handle;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 
     public User() {}
 

@@ -11,4 +11,7 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, UUID> {
     @Query("SELECT u FROM User u WHERE u.handle = ?1")
     Optional<User> findByHandle(String handle);
+
+    @Query("SELECT u from User u WHERE u.email = ?1")
+    Optional<User> findByEmail(String handle);
 }

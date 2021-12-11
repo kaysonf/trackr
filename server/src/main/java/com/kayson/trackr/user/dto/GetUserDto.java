@@ -1,7 +1,18 @@
 package com.kayson.trackr.user.dto;
 
-import lombok.Getter;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class GetUserDto {
-    @Getter private String handle;
+
+    @NotNull @NotBlank
+    private String handle;
+
+    public String getHandle() {
+        return handle;
+    }
+
+    public void setHandle(String handle) {
+        this.handle = handle;
+    }
 }

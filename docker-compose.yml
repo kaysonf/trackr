@@ -1,0 +1,37 @@
+version: "3.7"
+
+services:
+  trackr-db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: trackr
+
+  trackr-backend:
+    depends_on:
+      - trackr-db
+    build: ./server
+    ports:
+      - "8080:8080"
+    volumes:
+      - .m2:/root/.m2
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url" : "jdbc:postgresql://trackr-db:5432/trackr",
+        "spring.datasource.username" : "admin",
+        "spring.datasource.password" : "password",
+        "spring.jpa.hibernate.ddl-auto" : "create-drop",
+        "spring.jpa.show-sql" : true,
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.PostgreSQLDialect",
+        "spring.jpa.properties.hibernate.format_sql" : true,
+
+        "server.error.include-message" : "always"
+      }'
+
+
+volumes:
+  .m2:

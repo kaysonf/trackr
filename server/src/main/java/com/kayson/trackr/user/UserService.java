@@ -1,11 +1,13 @@
 package com.kayson.trackr.user;
 
+import com.kayson.trackr.exceptions.NoSuchElementFoundException;
 import com.kayson.trackr.user.dto.CreateUserDTO;
-import com.kayson.trackr.user.dto.GetUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
+import java.net.ConnectException;
 import java.util.Optional;
 
 @Service
@@ -18,12 +20,26 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> getUser(GetUserDto getUserDto) {
-        return userRepository.findByHandle(getUserDto.getHandle());
+    public User getUserByHandle(String userHandle) {
+
+        return userRepository.findByHandle(userHandle)
+                .orElseThrow(() -> new NoSuchElementFoundException(String.format("user %s does not exist", userHandle)));
     }
 
     public void createNewUser(CreateUserDTO createUserDTO) {
-        User newUser = new User(createUserDTO.getEmail(), createUserDTO.getHandle());
+        String userHandle = createUserDTO.getHandle();
+
+        if (userRepository.findByHandle(userHandle).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("user %s already exists", userHandle));
+        }
+
+        String userEmail = createUserDTO.getEmail();
+        if (userRepository.findByEmail(userEmail).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("email %s is already registered", userEmail));
+        }
+
+        User newUser = new User(createUserDTO.getHandle(), createUserDTO.getEmail());
+
         userRepository.save(newUser);
     }
 }

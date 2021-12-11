@@ -1,11 +1,10 @@
 package com.kayson.trackr.user;
 
 import com.kayson.trackr.user.dto.CreateUserDTO;
-import com.kayson.trackr.user.dto.GetUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/user")
@@ -19,12 +18,13 @@ public class UserController {
     }
 
     @PostMapping
-    public void createNewUser(@RequestBody CreateUserDTO createUserDTO) {
+    public void createNewUser(@Valid @RequestBody CreateUserDTO createUserDTO) {
         userService.createNewUser(createUserDTO);
     }
 
-    @GetMapping
-    public Optional<User> getUser(@RequestBody GetUserDto getUserDto) {
-        return userService.getUser(getUserDto);
+    @GetMapping("/{userHandle}")
+    public User getUserByHandle(@PathVariable String userHandle) {
+        return userService.getUserByHandle(userHandle);
     }
+
 }
