@@ -5,7 +5,8 @@ import javax.validation.constraints.NotNull;
 
 public class GetUserDto {
 
-    @NotNull @NotBlank
+    @NotNull
+    @NotBlank
     private String handle;
 
     public String getHandle() {

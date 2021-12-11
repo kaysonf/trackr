@@ -28,6 +28,14 @@ public class User {
     @Email
     private String email;
 
+    public User() {
+    }
+
+    public User(String handle, String email) {
+        this.handle = handle;
+        this.email = email;
+    }
+
     public UUID getId() {
         return id;
     }
@@ -38,13 +46,6 @@ public class User {
 
     public String getEmail() {
         return email;
-    }
-
-    public User() {}
-
-    public User(String handle, String email) {
-        this.handle = handle;
-        this.email = email;
     }
 
     @Override
