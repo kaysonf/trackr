@@ -1,6 +1,5 @@
 package com.kayson.trackr.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,7 +8,7 @@ import java.util.UUID;
 
 
 @Entity
-@JsonIgnoreProperties({"id"})
+//@JsonIgnoreProperties({"id"})
 @Table(name = "users")
 public class User {
     @Id
@@ -40,12 +39,24 @@ public class User {
         return id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public String getHandle() {
         return handle;
     }
 
+    public void setHandle(String handle) {
+        this.handle = handle;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

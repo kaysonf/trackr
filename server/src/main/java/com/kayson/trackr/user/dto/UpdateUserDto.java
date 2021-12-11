@@ -2,8 +2,12 @@ package com.kayson.trackr.user.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.UUID;
 
-public class CreateUserDTO {
+public class UpdateUserDto {
+
+    @com.kayson.trackr.validators.UUID(message = "no such user id")
+    private String id;
 
     @NotEmpty
     private String handle;
@@ -11,19 +15,16 @@ public class CreateUserDTO {
     @Email(message = "provided email is invalid")
     private String email;
 
-    public String getHandle() {
-        return handle;
+    public UUID getId() {
+        return UUID.fromString(id);
     }
 
-    public void setHandle(String handle) {
-        this.handle = handle;
+    public String getHandle() {
+        return handle;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }

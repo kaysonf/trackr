@@ -24,20 +24,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         });
 
         String errorsAsSingleMessage = String.join(",", errors);
-        return buildErrorResponse(errorsAsSingleMessage, HttpStatus.BAD_REQUEST, request);
+        return buildErrorResponse(errorsAsSingleMessage, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NoSuchElementFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Object> handleNoSuchElementFoundException(NoSuchElementFoundException ex, WebRequest request) {
-        return buildErrorResponse(ex, HttpStatus.NOT_FOUND, request);
+    public ResponseEntity<Object> handleNoSuchElementFoundException(NoSuchElementFoundException ex) {
+        return buildErrorResponse(ex, HttpStatus.NOT_FOUND);
     }
 
-    private ResponseEntity<Object> buildErrorResponse(Exception ex, HttpStatus httpStatus, WebRequest request) {
-        return buildErrorResponse(ex.getMessage(), httpStatus, request);
+    private ResponseEntity<Object> buildErrorResponse(Exception ex, HttpStatus httpStatus) {
+        return buildErrorResponse(ex.getMessage(), httpStatus);
     }
 
-    private ResponseEntity<Object> buildErrorResponse(String message, HttpStatus httpStatus, WebRequest request) {
+    private ResponseEntity<Object> buildErrorResponse(String message, HttpStatus httpStatus) {
         ErrorResponse errorResponse = new ErrorResponse(httpStatus.value(), message);
         return ResponseEntity.status(httpStatus).body(errorResponse);
     }
