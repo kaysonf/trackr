@@ -1,5 +1,7 @@
 package com.kayson.trackr.user.dto;
 
+import com.kayson.trackr.validators.Password;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
@@ -10,6 +12,9 @@ public class CreateUserDTO {
 
     @Email(message = "provided email is invalid")
     private String email;
+
+    @Password
+    private String password;
 
     public String getHandle() {
         return handle;
@@ -25,5 +30,13 @@ public class CreateUserDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

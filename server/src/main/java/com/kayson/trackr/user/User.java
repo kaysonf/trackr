@@ -1,5 +1,7 @@
 package com.kayson.trackr.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.kayson.trackr.validators.Password;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,7 +10,7 @@ import java.util.UUID;
 
 
 @Entity
-//@JsonIgnoreProperties({"id"})
+@JsonIgnoreProperties({"password"})
 @Table(name = "users")
 public class User {
     @Id
@@ -27,12 +29,17 @@ public class User {
     @Email
     private String email;
 
+    @Column(nullable = false)
+    @Password
+    private String password;
+
     public User() {
     }
 
-    public User(String handle, String email) {
+    public User(String handle, String email, String password) {
         this.handle = handle;
         this.email = email;
+        this.password = password;
     }
 
     public UUID getId() {
@@ -57,6 +64,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
