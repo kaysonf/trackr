@@ -5,6 +5,9 @@ import com.kayson.trackr.user.dto.CreateUserDTO;
 import com.kayson.trackr.user.dto.UpdateUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,14 +18,25 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public User getAuthUser() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return getUserById(UUID.fromString(userDetails.getUsername()));
+    }
+
+    public User getUserById(UUID id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementFoundException("user does not exist"));
     }
 
     public User getUserByHandle(String userHandle) {
-
         return userRepository.findByHandle(userHandle)
                 .orElseThrow(() -> new NoSuchElementFoundException(String.format("user %s does not exist", userHandle)));
     }
@@ -40,26 +54,25 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("email %s is already registered", userEmail));
         }
 
-        User newUser = new User(createUserDTO.getHandle(), createUserDTO.getEmail(), createUserDTO.getPassword());
+        String encodedPassword = passwordEncoder.encode(createUserDTO.getPassword());
+        User newUser = new User(createUserDTO.getHandle(), createUserDTO.getEmail(), encodedPassword);
 
         return userRepository.save(newUser);
     }
 
     public User updateUser(UpdateUserDto updateUserDto) {
-        UUID idOfUserToUpdate = updateUserDto.getId();
-        User userToUpdate = userRepository.findById(idOfUserToUpdate)
-                .orElseThrow(() -> new NoSuchElementFoundException(String.format("user id %s does not exist", idOfUserToUpdate)));
 
+        User userToUpdate = getAuthUser();
 
         String userHandle = updateUserDto.getHandle();
         userRepository.findByHandle(userHandle).ifPresent(userByHandle -> {
-            if (userByHandle.getId() != idOfUserToUpdate)
+            if (userByHandle.getId() != userToUpdate.getId())
                 throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("handle %s is already registered", userHandle));
         });
 
         String userEmail = updateUserDto.getEmail();
         userRepository.findByEmail(userEmail).ifPresent(userByEmail -> {
-            if (userByEmail.getId() != idOfUserToUpdate)
+            if (userByEmail.getId() != userToUpdate.getId())
                 throw new ResponseStatusException(HttpStatus.CONFLICT, String.format("email %s is already registered", userEmail));
         });
 
