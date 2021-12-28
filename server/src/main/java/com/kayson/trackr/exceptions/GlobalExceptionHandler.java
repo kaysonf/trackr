@@ -33,6 +33,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return buildErrorResponse(ex, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(AlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<Object> handleAlreadyExistsException(AlreadyExistsException ex) {
+        return buildErrorResponse(ex, HttpStatus.CONFLICT);
+    }
+
     private ResponseEntity<Object> buildErrorResponse(Exception ex, HttpStatus httpStatus) {
         return buildErrorResponse(ex.getMessage(), httpStatus);
     }

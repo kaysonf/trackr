@@ -1,8 +1,13 @@
 package com.kayson.trackr.user.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+@Getter
+@Setter
 public class UpdateUserDto {
 
     @NotEmpty
@@ -10,13 +15,5 @@ public class UpdateUserDto {
 
     @Email(message = "provided email is invalid")
     private String email;
-
-    public String getHandle() {
-        return handle;
-    }
-
-    public String getEmail() {
-        return email;
-    }
 
 }

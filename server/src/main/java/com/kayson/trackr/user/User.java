@@ -2,6 +2,10 @@ package com.kayson.trackr.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.kayson.trackr.validators.Password;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,6 +16,9 @@ import java.util.UUID;
 @Entity
 @JsonIgnoreProperties({"password"})
 @Table(name = "users")
+@Getter
+@Setter
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -33,44 +40,9 @@ public class User {
     @Password
     private String password;
 
-    public User() {
-    }
-
     public User(String handle, String email, String password) {
         this.handle = handle;
         this.email = email;
-        this.password = password;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getHandle() {
-        return handle;
-    }
-
-    public void setHandle(String handle) {
-        this.handle = handle;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
         this.password = password;
     }
 
