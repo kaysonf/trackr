@@ -1,4 +1,4 @@
-package com.kayson.trackr.exceptions;
+package com.kayson.trackr.exception;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

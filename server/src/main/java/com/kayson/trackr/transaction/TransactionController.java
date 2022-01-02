@@ -1,7 +1,9 @@
-package com.kayson.trackr.transactions;
+package com.kayson.trackr.transaction;
 
 import com.kayson.trackr.auth.AuthService;
-import com.kayson.trackr.transactions.dto.AddTransactionDTO;
+import com.kayson.trackr.exception.NoSuchElementFoundException;
+import com.kayson.trackr.transaction.dto.AddTransactionDTO;
+import com.kayson.trackr.transaction.dto.TransactionDTO;
 import com.kayson.trackr.wallet.Wallet;
 import com.kayson.trackr.wallet.WalletRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.NoSuchElementException;
 
 @Slf4j
 @RestController
@@ -30,12 +31,13 @@ public class TransactionController {
     }
 
     @PostMapping
-    public Transaction addTransaction(@Valid @RequestBody AddTransactionDTO dto) {
+    public TransactionDTO addTransaction(@Valid @RequestBody AddTransactionDTO dto) {
 
         Wallet wallet = walletRepository.findByWalletByUser(dto.getWalletName(), this.authService.getAuthUser()).orElseThrow(() -> {
-            throw new NoSuchElementException(String.format("%s wallet not found for user", dto.getWalletName()));
+            throw new NoSuchElementFoundException(String.format("%s wallet not found for user", dto.getWalletName()));
         });
 
-        return this.transactionService.addTransaction(wallet, dto);
+        Transaction transaction = this.transactionService.addTransaction(wallet, dto);
+        return new TransactionDTO(transaction);
     }
 }

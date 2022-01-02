@@ -1,7 +1,7 @@
 package com.kayson.trackr.user;
 
-import com.kayson.trackr.exceptions.AlreadyExistsException;
-import com.kayson.trackr.exceptions.NoSuchElementFoundException;
+import com.kayson.trackr.exception.AlreadyExistsException;
+import com.kayson.trackr.exception.NoSuchElementFoundException;
 import com.kayson.trackr.user.dto.CreateUserDTO;
 import com.kayson.trackr.user.dto.UpdateUserDto;
 import org.springframework.beans.factory.annotation.Autowired;

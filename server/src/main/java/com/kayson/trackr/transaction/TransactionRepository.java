@@ -1,4 +1,4 @@
-package com.kayson.trackr.transactions;
+package com.kayson.trackr.transaction;
 
 import com.kayson.trackr.validators.UUID;
 import com.kayson.trackr.wallet.Wallet;

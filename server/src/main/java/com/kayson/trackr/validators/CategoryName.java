@@ -17,7 +17,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Pattern(regexp = "^[a-z]+")
 @NotEmpty
 @ReportAsSingleViolation
-public @interface LowerCaseAlpha {
+public @interface CategoryName {
     String message() default "only lower case alphabets allowed";
 
     Class<?>[] groups() default {};

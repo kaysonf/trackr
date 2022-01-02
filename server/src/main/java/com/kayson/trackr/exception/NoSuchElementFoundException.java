@@ -1,4 +1,4 @@
-package com.kayson.trackr.exceptions;
+package com.kayson.trackr.exception;
 
 public class NoSuchElementFoundException extends RuntimeException {
     public NoSuchElementFoundException(String message) {

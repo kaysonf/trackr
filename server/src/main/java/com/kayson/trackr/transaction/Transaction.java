@@ -1,5 +1,6 @@
-package com.kayson.trackr.transactions;
+package com.kayson.trackr.transaction;
 
+import com.kayson.trackr.category.Category;
 import com.kayson.trackr.wallet.Wallet;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,7 @@ public class Transaction {
     private Wallet wallet;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "wallet_name")
+    @JoinColumn(referencedColumnName = "name")
     private Category category;
 
     @Column(nullable = false)
@@ -44,5 +45,9 @@ public class Transaction {
         this.date = date;
         this.amount = amount;
         this.category = category;
+    }
+
+    public String getCategoryName() {
+        return this.category.getName();
     }
 }

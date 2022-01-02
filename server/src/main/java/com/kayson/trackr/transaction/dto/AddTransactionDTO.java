@@ -1,5 +1,6 @@
-package com.kayson.trackr.transactions.dto;
+package com.kayson.trackr.transaction.dto;
 
+import com.kayson.trackr.validators.CategoryName;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ public class AddTransactionDTO {
     private String walletName;
 
     @NotEmpty
+    @CategoryName
     private String categoryName;
 
     @NotNull

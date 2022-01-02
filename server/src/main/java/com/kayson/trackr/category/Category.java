@@ -1,6 +1,6 @@
-package com.kayson.trackr.transactions;
+package com.kayson.trackr.category;
 
-import com.kayson.trackr.validators.LowerCaseAlpha;
+import com.kayson.trackr.validators.CategoryName;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +19,7 @@ public class Category {
     private Integer id;
 
     @Column(unique = true, nullable = false)
-    @LowerCaseAlpha
+    @CategoryName
     private String name;
 
     public Category(String name) {

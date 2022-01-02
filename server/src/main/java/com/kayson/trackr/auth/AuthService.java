@@ -1,6 +1,6 @@
 package com.kayson.trackr.auth;
 
-import com.kayson.trackr.exceptions.NoSuchElementFoundException;
+import com.kayson.trackr.exception.NoSuchElementFoundException;
 import com.kayson.trackr.user.User;
 import com.kayson.trackr.user.UserRepository;
 import lombok.extern.slf4j.Slf4j;

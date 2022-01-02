@@ -1,6 +1,6 @@
 package com.kayson.trackr.user;
 
-import com.kayson.trackr.exceptions.AlreadyExistsException;
+import com.kayson.trackr.exception.AlreadyExistsException;
 import com.kayson.trackr.user.dto.CreateUserDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

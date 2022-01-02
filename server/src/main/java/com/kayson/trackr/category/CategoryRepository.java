@@ -1,4 +1,4 @@
-package com.kayson.trackr.transactions;
+package com.kayson.trackr.category;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
