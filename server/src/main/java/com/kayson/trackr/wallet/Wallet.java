@@ -38,11 +38,11 @@ public class Wallet {
     private User user;
 
     @Column
-    private float amount;
+    private float balance;
 
     public Wallet(User user, String name) {
         this.user = user;
-        this.amount = 0;
+        this.balance = 0;
         this.name = name;
     }
 }

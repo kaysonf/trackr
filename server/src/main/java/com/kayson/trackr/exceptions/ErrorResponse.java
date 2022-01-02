@@ -1,10 +1,10 @@
 package com.kayson.trackr.exceptions;
 
 public class ErrorResponse {
-    private final int status;
+    private final Integer status;
     private final String message;
 
-    public ErrorResponse(int status, String message) {
+    public ErrorResponse(Integer status, String message) {
         this.status = status;
         this.message = message;
     }
